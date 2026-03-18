@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Sign Language Speaker Pro</title>
+    <!-- Modern, geometric font -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- MediaPipe Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <!-- Background Accents -->
+    <div class="bg-gradient bg-1"></div>
+    <div class="bg-gradient bg-2"></div>
+
+    <div class="app-wrapper">
+        <!-- LEFT COLUMN: CAMERA & OUTPUT -->
+        <main class="left-col">
+            <header class="main-header">
+                <h1>Smart Sign <span>Speaker</span></h1>
+                <p>Real-time vision & voice synthesis</p>
+            </header>
+
+            <div class="camera-panel">
+                <div class="camera-top-bar">
+                    <div class="status-indicators">
+                        <span class="badge red" id="hand-status">
+                            <span class="blinker"></span> No Hand
+                        </span>
+                        <span class="badge gray" id="gesture-name">Tracking...</span>
+                    </div>
+                    <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
+                </div>
+                
+                <div class="video-container" id="video-container">
+                    <video id="webcam" autoplay playsinline></video>
+                    <canvas id="output_canvas"></canvas>
+                    <div class="cam-overlay" id="cam-overlay">
+                        <span>Click 'Start' to initialize</span>
+                    </div>
+                </div>
+
+                <div class="main-output-box">
+                    <div class="output-header">Live Spoken Output 🗣️</div>
+                    <div class="spoken-text" id="spoken-output">Waiting for your sign...</div>
+                </div>
+            </div>
+        </main>
+
+        <!-- RIGHT COLUMN: CONTROLS & MODULES -->
+        <aside class="right-col">
+            <!-- System Controls -->
+            <div class="glass-panel controls-panel">
+                <h3>System Controls</h3>
+                <div class="control-row">
+                    <button id="start-btn" class="btn primary shadow-hover">▶ Start Camera</button>
+                    <button id="reset-btn" class="btn secondary">↻ Reset</button>
+                    <button id="sound-btn" class="btn secondary active">🔊 Sound</button>
+                </div>
+                
+                <div class="slider-container">
+                    <div class="slider-header">
+                        <label for="sensitivity-slider">Detection Sensitivity</label>
+                        <span class="slider-val" id="sens-val">65%</span>
+                    </div>
+                    <input type="range" id="sensitivity-slider" min="30" max="95" value="65" class="styled-slider">
+                </div>
+            </div>
+
+            <!-- Gesture History -->
+            <div class="glass-panel">
+                <h3>Gesture History</h3>
+                <ul class="history-list" id="history-list">
+                    <li class="history-empty">No gestures logged yet.</li>
+                </ul>
+            </div>
+
+            <!-- Standard Gestures Cards -->
+            <div class="glass-panel">
+                <h3>Standard Gestures</h3>
+                <div class="gesture-grid">
+                    <div class="gesture-card" id="card-peace">
+                        <span class="g-title">Peace Sign</span>
+                        <span class="g-text">"I love you"</span>
+                    </div>
+                    <div class="gesture-card" id="card-thumbsup">
+                        <span class="g-title">Thumbs Up</span>
+                        <span class="g-text">"Approved"</span>
+                    </div>
+                    <div class="gesture-card" id="card-palm">
+                        <span class="g-title">Open Palm</span>
+                        <span class="g-text">"Hello Bro"</span>
+                    </div>
+                    <div class="gesture-card" id="card-indexup">
+                        <span class="g-title">Index Up</span>
+                        <span class="g-text">"I am Pritish"</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom Trainer -->
+            <div class="glass-panel trainer-panel">
+                <div class="trainer-header">
+                    <h3>Custom Trainer</h3>
+                    <button id="clear-custom-btn" class="btn small error">Clear</button>
+                </div>
+                <div class="trainer-inputs">
+                    <input type="text" id="train-name" placeholder="Gesture Name (e.g. My Pose)">
+                    <input type="text" id="train-sentence" placeholder="Sentence to speak">
+                </div>
+                <button id="capture-btn" class="btn primary full-width" disabled>📸 Capture & Save</button>
+                
+                <div class="custom-scrollable">
+                    <ul class="custom-list" id="trainer-list"></ul>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
