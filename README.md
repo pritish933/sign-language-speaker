@@ -13,4 +13,4 @@ A web app that converts hand gestures into speech using MediaPipe.
 - Web Speech API
 
 ## Demo
-[Netlify link]
+https://timely-bavarois-dc3b31.netlify.app/
